@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postman-like Interface</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.min.css">
+    <style>
+
+        #containerstatic {
+            height: 25vw;
+            overflow: auto; 
+            /* Otros estilos para el contenedor si es necesario */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2>Postman-like Interface</h2>
+        <div class="row">
+            <div class="col-m1">
+
+            </div>
+            <div class="col">
+                        <!-- Request Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                Request
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-m1">
+                        <!-- HTTP Method -->
+                        <div class="form-group">
+                            <label for="httpMethod">Method</label>
+                            <select class="form-control" id="httpMethod" name="httpMethod">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Endpoint URL -->
+                        <div class="form-group">
+                            <label for="endpoint">Endpoint URL</label>
+                            <input type="text" class="form-control" id="endpoint" name="endpoint"
+                                placeholder="Enter endpoint URL">
+                        </div>
+                    </div>
+                    <div class="col-m1">
+                        <div class="form-group">
+                            <label for="send">Send</label>
+                            <button type="button" name="send" class="form-control" onclick="sendRequest()">Send Request</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <!-- Nav Tabs -->
+                    <ul class="nav nav-tabs" id="myTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab1" data-toggle="tab" href="#params">Params</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab2" data-toggle="tab" href="#body">Body</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab3-auth" data-toggle="tab" href="#auth">Authorization</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab4-header" data-toggle="tab" href="#header">header</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content mt-2">
+                    <div class="tab-pane fade show active" id="params">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="containerstatic">
+                                    <h2>Tabla Editable</h2>
+                                    <!-- Tabla -->
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">key</th>
+                                                <th scope="col">value</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                            <!-- Filas se agregarán aquí dinámicamente -->
+                                        </tbody>
+                                    </table>
+        
+                                    <!-- Botones de Agregar y Eliminar -->
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary" onclick="agregarFila()">Agregar Fila</button>
+                                        <button class="btn btn-danger" onclick="eliminarFila()">Eliminar Fila</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="body">
+                        <div id="containerstatic">
+                            <div class="row row-cols-2">
+                        
+                                <div class="col">
+                                    <!-- Request Body -->
+                                    <div class="form-group">
+                                        <label for="requestBody">Request Body</label>
+                                        <textarea class="form-control" id="requestBody" name="requestBody" rows="5"
+                                            placeholder="Enter request body"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <!-- Headers -->
+                                    <div class="form-group">
+                                        <label for="headers">Result</label>
+                                        <textarea class="form-control" id="headers" name="headers" rows="3"
+                                            placeholder="Enter headers"></textarea>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="auth">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="containerstatic">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="header">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="containerstatic">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                <!-- Authorization -->
+                <div class="form-group">
+                    <label for="authorization">Authorization</label>
+                    <input type="text" class="form-control" id="authorization" name="authorization"
+                        placeholder="Enter authorization token">
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.3/mode/javascript/javascript.js"></script>
+
+    <script>
+        // Initialize CodeMirror for textarea
+        var requestBodyEditor = CodeMirror.fromTextArea(document.getElementById("requestBody"), {
+            lineNumbers: true,
+            mode: "application/json",
+            
+        });
+
+        var headersEditor = CodeMirror.fromTextArea(document.getElementById("headers"), {
+            lineNumbers: true,
+            mode: "text/plain",
+        });
+        
+    </script>
+    <script>
+        // Function to send the request (you can implement this based on your needs)
+        function sendRequest() {   
+            alert("send");
+        }
+    </script>
+    <script>
+        // Contador para numerar filas
+        let contadorFilas = 1;
+    
+        // Función para agregar una nueva fila a la tabla
+        function agregarFila() {
+            const tableBody = document.getElementById("tableBody");
+    
+            // Crear nueva fila
+            const nuevaFila = document.createElement("tr");
+    
+            // Agregar celdas
+            nuevaFila.innerHTML = `
+                <th scope="row">${contadorFilas}</th>
+                <td><input type="text" class="form-control" id="campo1-${contadorFilas}" /></td>
+                <td><input type="text" class="form-control" id="campo2-${contadorFilas}" /></td>
+                <td><button class="btn btn-warning" onclick="editarFila(${contadorFilas})">Apply</button></td>
+            `;
+    
+            // Incrementar contador de filas
+            contadorFilas++;
+    
+            // Agregar la fila al cuerpo de la tabla
+            tableBody.appendChild(nuevaFila);
+        }
+    
+        // Función para editar una fila
+        function editarFila(numeroFila) {
+            const campo1 = document.getElementById(`campo1-${numeroFila}`).value;
+            const campo2 = document.getElementById(`campo2-${numeroFila}`).value;
+    
+            // Aquí puedes implementar la lógica para editar la fila, por ejemplo, mostrar una alerta con los valores
+            alert(`Editar Fila ${numeroFila}: Campo1 - ${campo1}, Campo2 - ${campo2}`);
+        }
+    
+        // Función para eliminar la última fila
+        function eliminarFila() {
+            const tableBody = document.getElementById("tableBody");
+            const filas = tableBody.getElementsByTagName("tr");
+    
+            if (filas.length > 0) {
+                // Eliminar la última fila
+                tableBody.removeChild(filas[filas.length - 1]);
+            }
+            contadorFilas--;
+        }
+    </script>
+    
+</body>
+
+</html>
