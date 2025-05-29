@@ -1,0 +1,180 @@
+  body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+        }
+        #canvas {
+            border: 1px solid #ccc;
+            min-height: 600px;
+            position: relative;
+            overflow: auto;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            background-image: linear-gradient(to right, #e9ecef 1px, transparent 1px),
+                              linear-gradient(to bottom, #e9ecef 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #fff;
+        }
+        .node {
+            width: 160px;
+            height: auto;
+            border: 1px solid #666;
+            border-radius: 8px;
+            padding: 10px;
+            position: absolute;
+            background: white;
+            cursor: grab;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+        .node:hover {
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+        .node strong {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            display: block;
+            width: 100%;
+            padding-bottom: 5px;
+            pointer-events: none;
+            color: #333;
+        }
+        .node small {
+            font-size: 0.85em;
+            color: #555;
+            pointer-events: none;
+        }
+
+        /* Estilos específicos para Start, End, CalcPy, Router */
+        .node.start-node {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .node.end-node {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .node.calcpy-node {
+            background-color: #cfe2ff; /* Light blue */
+            border-color: #0d6efd; /* Blue */
+            color: #052c65;
+        }
+        .node.router-node {
+            background-color: #fff3cd; /* Light yellow */
+            border-color: #ffc107; /* Yellow */
+            color: #664d03;
+        }
+
+        /* Close button styles */
+        .node .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: #dc3545;
+            cursor: pointer;
+            z-index: 10; /* Ensures it's clickable above other elements */
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .node .close-btn:hover {
+            opacity: 1;
+        }
+
+        .jtk-connector {
+            z-index: 1;
+        }
+        
+        .jtk-endpoint {
+            z-index: 50;
+        }
+        .jtk-endpoint.blue-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            opacity: 0.8;
+            cursor: crosshair;
+            box-shadow: 0 0 4px rgba(0,0,0,0.4);
+            transition: all 0.1s ease-in-out;
+        }
+        .jtk-endpoint.blue-dot:hover {
+            opacity: 1;
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .jtk-hover {
+            stroke-width: 4px;
+            stroke: #1e8151 !important;
+        }
+
+        .btn {
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: .5rem;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary { background-color: #007bff; border-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+        .btn-secondary { background-color: #6c757d; border-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; border-color: #5a6268; }
+        .btn-success { background-color: #28a745; border-color: #28a745; }
+        .btn-success:hover { background-color: #218838; border-color: #218838; }
+        .btn-info { background-color: #17a2b8; border-color: #17a2b8; }
+        .btn-info:hover { background-color: #138496; border-color: #138496; }
+        .btn-warning { background-color: #ffc107; border-color: #ffc107; color: #212529; }
+        .btn-warning:hover { background-color: #e0a800; border-color: #e0a800; }
+        .btn-dark { background-color: #212529; border-color: #212529; }
+        .btn-dark:hover { background-color: #0b0c0d; border-color: #0b0c0d; }
+
+
+        .btn-info.mb-0 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .d-flex.justify-content-between.mb-3 {
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Estilos para las filas de parámetros/headers */
+        .param-row, .header-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        .param-row input, .header-row input {
+            flex-grow: 1;
+        }
+        .param-row button, .header-row button {
+            flex-shrink: 0;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+        .param-row input:first-child, .header-row input:first-child {
+            width: 40%;
+        }
+        .param-row input:nth-child(2), .header-row input:nth-child(2) {
+            width: 50%;
+        }
